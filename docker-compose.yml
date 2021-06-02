@@ -1,0 +1,59 @@
+version: "3.5"
+
+# Reference: https://www.cockroachlabs.com/docs/v21.1/start-a-local-cluster-in-docker-linux
+services:
+    # Node 1 (main)
+    roach1:
+        container_name: cockroach-db-1
+        image: cockroachdb/cockroach:latest
+        hostname: roach1
+        # Assign Container to a Network
+        networks: 
+            - cockroach-net
+        ports:
+            - 26257:26257   # Cockroach Database port
+            - 9090:8080     # Cockroach UI Panel port
+        volumes:
+            - ./cockroach-data/roach1:/cockroach/cockroach-data
+        command: start --insecure --join=roach1,roach2,roach3
+      
+    # Node 2
+    roach2:
+        container_name: cockroach-db-2
+        image: cockroachdb/cockroach:latest
+        hostname: roach2
+        # Assign Container to a Network
+        networks: 
+            - cockroach-net
+        volumes:
+            - ./cockroach-data/roach2:/cockroach/cockroach-data
+        command: start --insecure --join=roach1,roach2,roach3
+        
+    # Node 3
+    roach3:
+        container_name: cockroach-db-3
+        image: cockroachdb/cockroach:latest
+        hostname: roach3
+        # Assign Container to a Network
+        networks: 
+            - cockroach-net
+        volumes:
+            - ./cockroach-data/roach3:/cockroach/cockroach-data
+        command: start --insecure --join=roach1,roach2,roach3
+    
+    # First Time Initialization of Cockroach DB
+    init-roach1:
+        image: cockroachdb/cockroach:latest
+        container_name: init-cockroach
+        depends_on: 
+            - roach1
+        restart: "no"
+        # Assign Container to a Network
+        networks: 
+            - cockroach-net
+        entrypoint: ["bash", "-c" ,"./cockroach init --insecure --host cockroach-db-1:26257 | wc || exit"]
+
+# Initialize a Network 
+networks:
+    cockroach-net:
+        driver: bridge
