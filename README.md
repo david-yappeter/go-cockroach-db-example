@@ -74,41 +74,6 @@ After that, open http://localhost:9000 and it will show an UI Panel like this:
 
 ![Cockroach Panel](https://gist.githubusercontent.com/david-yappeter/22abcf6c57c310475178e8c45f8a7059/raw/487f822ef1873c18cc3f3a5de41d4d7f356294b2/cockroach_panel.png)
 
-<!-- ## <b> Writing Our GraphQL Server </b> (Skip this part)
-
-We will use https://github.com/99designs/gqlgen library to help us generate the server by running:
-```
-go get github.com/99designs/gqlgen
-go run github.com/99designs/gqlgen init
-```
-
-and then we need to change the configuration file about the data types
-
-#### `gqlgen.yml:45`
-```
-...
-models:
-  ID:
-    model:
-      - github.com/99designs/gqlgen/graphql.Int64  # this one
-      - github.com/99designs/gqlgen/graphql.Int
-      - github.com/99designs/gqlgen/graphql.ID
-      - github.com/99designs/gqlgen/graphql.Int32
-  Int:
-    model:
-      - github.com/99designs/gqlgen/graphql.Int
-      - github.com/99designs/gqlgen/graphql.Int64
-      - github.com/99designs/gqlgen/graphql.Int32
-...
-```
-
-Move the `Int64` to the top. <br />So when we generate GraphQL Type `ID` it will give us `int64` instread of `string`.
-
-And then run the generate command 
-```
-go run github.com/99designs/gqlgen
-``` -->
-
 ## <b> Running Our GraphQL Server </b>
 
 Environment file that I use:
@@ -124,7 +89,21 @@ DB_DATABASE=defaultdb
 The password is empty because the it is an insecure Database Initialization
 
 Before we run the code, make sure the `.env` Successfully Connected when the program is running. <br />
-Try this library to get the `.env` file https://github.com/joho/godotenv
+Try this library to get the `.env` file https://github.com/joho/godotenv apply it into the `main()` function
+```
+import(
+  ....
+  "github.com/joho/godotenv"
+)
+
+func main(){
+  if err := godotenv.Load(); err != nil {
+    panic(err)
+  }
+
+  ....
+}
+```
 
 To run the server, just simply run this command:
 ```
@@ -150,7 +129,7 @@ response:
 {
   "data": {
     "user_create": {
-        "id": 663947492917903400,
+        "id": 1,
         "name": "My Name"
     }
   }
@@ -171,11 +150,11 @@ response:
   "data": {
     "users": [
       {
-        "id": 663947492917903400,
+        "id": 1,
         "name": "My Name"
       },
       {
-        "id": 663949671822622700,
+        "id": 2,
         "name": "Second User"
       }
     ]
