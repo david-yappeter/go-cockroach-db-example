@@ -72,7 +72,7 @@ docker-compose up -d
 
 After that, open http://localhost:9000 and it will show an UI Panel like this:
 
-![Cockroach Panel](./images/cockroach_panel.png)
+![Cockroach Panel](https://gist.githubusercontent.com/david-yappeter/22abcf6c57c310475178e8c45f8a7059/raw/487f822ef1873c18cc3f3a5de41d4d7f356294b2/cockroach_panel.png)
 
 <!-- ## <b> Writing Our GraphQL Server </b> (Skip this part)
 

@@ -238,14 +238,14 @@ input UpdateUser{
 }
 
 type Query {
-  user(id: ID!): User! @goField(forceResolver: true)
-  users: [User!]! @goField(forceResolver: true)
+  user(id: ID!): User! 
+  users: [User!]! 
 }
 
 type Mutation {
-  user_create(input: NewUser!): User! @goField(forceResolver: true)
-  user_update(input: UpdateUser!): User! @goField(forceResolver: true)
-  user_delete(id: ID!): String! @goField(forceResolver: true)
+  user_create(input: NewUser!): User! 
+  user_update(input: UpdateUser!): User! 
+  user_delete(id: ID!): String! 
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
