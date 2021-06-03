@@ -134,7 +134,7 @@ After that, check http://localhost:8080 , a graphQL Playground will come out. <b
 Try to run some of its mutation/query. 
 <br />
 <br />
-`For Example: `
+<b>Mutation Example: </b>
 ```
 mutation{
   user_create(input:{
@@ -142,6 +142,43 @@ mutation{
   }){
     id
     name
+  }
+}
+```
+response:
+```
+{
+  "data": {
+    "user_create": {
+        "id": 663947492917903400,
+        "name": "My Name"
+    }
+  }
+}
+```
+<b>Query Example</b>
+```
+query{
+  users{
+    id
+    name
+  }
+}
+```
+response:
+```
+{
+  "data": {
+    "users": [
+      {
+        "id": 663947492917903400,
+        "name": "My Name"
+      },
+      {
+        "id": 663949671822622700,
+        "name": "Second User"
+      }
+    ]
   }
 }
 ```

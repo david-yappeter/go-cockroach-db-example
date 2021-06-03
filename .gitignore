@@ -19,3 +19,5 @@
 
 .vscode
 __debug_bin
+
+cockroach-data
